@@ -88,6 +88,24 @@
 
 
   --border-radius: 2px;
+
+  /* SLIDERS */
+  --slider-bg: rgb(94, 94, 94);
+  --slider-connect-bg: #fff;
+  --slider-connect-bg-disabled: #5e5e5e;
+  --slider-height: 2px;
+  --slider-vertical-height: 300px;
+  --slider-radius: 9999px;
+
+  --slider-handle-bg: #fff;
+  --slider-handle-border: 0;
+  --slider-handle-width: 10px;
+  --slider-handle-height: 10px;
+  --slider-handle-radius: 9999px;
+  --slider-handle-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0.3) 0px 0px 0px 0.5px;
+  --slider-handle-shadow-active: rgba(0, 0, 0, 0) 0px 0px 0px 1px, rgba(0, 0, 0, 0.3) 0px 0px 0px 0.5px;
+  --slider-handle-ring-width: 0px;
+  --slider-handle-ring-color: transparent;
 }
 
 body {
