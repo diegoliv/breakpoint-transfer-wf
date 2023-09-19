@@ -9,6 +9,7 @@
           :min="modelMin"
           :max="modelMax"
           :value="modelValue"
+          :step="modelMax <= 1 ? -1 : 1"
           @update="$emit('update:modelValue', $event)"
         />
       </div>
@@ -110,6 +111,6 @@ export default {
     max-width: 64px;
     background-color: var(--background4);
     color: var(--text4);
-    border-color: var(--border2);
+    border: 1px solid var(--border3);
   }
 </style>
