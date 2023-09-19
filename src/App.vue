@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <Preview :bg-color="bgColor" :box-color="boxColor" :shadow="shadowCSS" v-if="isElSelected" />
-    <div class="controls">
+    <div class="controls" v-if="isElSelected">
       <Control id="angle" label="Angle" v-model="angle" min="0" max="360" />
       <Control id="distance" label="Distance" v-model="distance" max="1000" />
       <Control id="intensity" label="Intensity" v-model="intensity" max="1" />
@@ -108,7 +108,12 @@ export default {
     position:relative;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 460px;
     .controls {
+      width: 100%;
+      flex-grow: 1;
       display: grid;
       grid-template-columns: 1fr;
       gap: 8px;
