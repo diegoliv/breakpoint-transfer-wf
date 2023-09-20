@@ -1,10 +1,10 @@
 <template>
   <div class="control-group">
     <label :for="id">{{ label }}</label>
-    <div class="control color">
-      <div class="color-control">
-        <div class="color-trigger" :style="`background-color: ${value}`" @click="togglePicker"></div>
-        <div class="color-picker-container" v-show="isActive">
+    <div class="control color" :class="isActive ? 'active' : ''">
+      <div class="color-control" v-click-outside="onClickOutside">
+        <div class="color-trigger" :style="`background-color: ${value}`" @click="isActive = !isActive"></div>
+        <div class="color-picker-container" v-show="isActive" >
           <Chrome v-model="value"/>
         </div>
       </div>
@@ -14,6 +14,7 @@
 
 <script>
 import { Chrome } from "@ckpack/vue-color";
+import vClickOutside from 'click-outside-vue3';
 
 export default {
   components: {
@@ -21,6 +22,9 @@ export default {
   },
   props: ['modelValue', 'label', 'id'],
   emits: ['update:modelValue'],
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   data() {
     return {
       isActive: false,
@@ -38,9 +42,9 @@ export default {
     }    
   },
   methods: {
-    togglePicker() {
-      this.isActive = !this.isActive;
-    },
+    onClickOutside(event) {
+      this.isActive = false
+    }    
   }
 }
 </script>
@@ -48,9 +52,18 @@ export default {
 <style lang="scss">
   .control.color {
     position: relative;
+    z-index: 10;
     width: 100%;
     display: flex;
     justify-content: flex-end;
+
+    &.active {
+      z-index: 20;
+
+      .color-trigger {
+        box-shadow: 0 0 0 1px var(--blueBorder);
+      }
+    }
 
     .color-control {
       position: relative;
@@ -58,7 +71,7 @@ export default {
 
     .color-trigger{
       width: 64px;
-      height: 32px;
+      height: 28px;
       border-radius: var(--border-radius);
       border: 1px solid var(--border3);
       cursor: pointer;
@@ -69,6 +82,7 @@ export default {
       bottom: 100%;
       right: 0;
       z-index: 1;
+      padding-bottom: 4px;
     }
   }
 </style>

@@ -13,7 +13,10 @@
           @update="$emit('update:modelValue', $event)"
         />
       </div>
-      <div class="control-input-wrapper">
+      <div 
+        class="control-input-wrapper"
+        :class="isFocused ? 'active' : ''"
+      >
         <input 
           class="control-input"
           type="number" 
@@ -23,6 +26,8 @@
           :max="modelMax"
           :value="modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
         />
       </div>
     </div>
@@ -38,6 +43,11 @@ export default {
   },
   props: ['modelValue', 'label', 'id', 'min', 'max'],
   emits: ['update:modelValue'],
+  data() {
+    return {
+      isFocused: false
+    }
+  },
   mounted() {
     this.sliderValue = Number(this.modelValue)
   },
@@ -92,6 +102,10 @@ export default {
       color: var(--text1);
       padding: 4px 8px;
       --webkit-appearance: none;
+      
+      &:focus {
+        outline: none;
+      }
     }
 
   .control-input::-webkit-outer-spin-button,
@@ -112,5 +126,9 @@ export default {
     background-color: var(--background4);
     color: var(--text4);
     border: 1px solid var(--border3);
+
+    &.active {
+      box-shadow: 0 0 0 1px var(--blueBorder);      
+    }
   }
 </style>
