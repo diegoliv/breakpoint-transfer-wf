@@ -10,8 +10,8 @@
         @openpresets="isPresetsModalOpen = true"
       />
       <div class="controls">
-        <Control id="angle" label="Angle" v-model="angle" min="0" max="360" />
-        <Control id="distance" label="Distance" v-model="distance" min="0.1" max="1000" />
+        <Control id="angle" label="Light Position" v-model="angle" min="0" max="360" suffix="deg" />
+        <Control id="distance" label="Distance" v-model="distance" min="1" max="1000" />
         <Control id="intensity" label="Intensity" v-model="intensity" min="0.1" max="1" />
         <Control id="sharpness" label="Sharpness" v-model="sharpness" min="0.1" max="1" />
         <ColorControl id="color" label="Color" v-model="color" />

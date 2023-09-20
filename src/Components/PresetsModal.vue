@@ -18,6 +18,7 @@
       >
       <div 
         class="preset-item"
+        :class="preset.mode"
         :style="getBgStyle(preset)"
         @click="$emit('selected', preset)"
       >
@@ -41,30 +42,33 @@ export default {
       presets: [
         {
           name: 'Standard',
+          mode: 'light',
           angle: 0,
-          intensity: 0.2,
-          distance: 500,
-          sharpness: 0.9,
+          distance: 100,
+          intensity: 0.1,
+          sharpness: 0.5,
           color: { r: 0, g: 0, b: 0, a: 1 },
           bgColor: { r: 213, g: 231, b: 250, a: 1 },
           boxColor: { r: 255, g: 255, b: 255, a: 1 },
         },
         {
           name: 'Short',
+          mode: 'light',
           angle: 0,
-          intensity: 0.2,
-          distance: 500,
-          sharpness: 0.9,
+          distance: 50,
+          intensity: 0.15,
+          sharpness: 1,
           color: { r: 0, g: 0, b: 0, a: 1 },
           bgColor: { r: 213, g: 231, b: 250, a: 1 },
           boxColor: { r: 255, g: 255, b: 255, a: 1 },
         },
         {
           name: 'Soft',
+          mode: 'light',
           angle: 0,
-          intensity: 0.2,
-          distance: 500,
-          sharpness: 0.9,
+          distance: 80,
+          intensity: 0.1,
+          sharpness: 0.1,
           color: { r: 0, g: 0, b: 0, a: 1 },
           bgColor: { r: 213, g: 231, b: 250, a: 1 },
           boxColor: { r: 255, g: 255, b: 255, a: 1 },
@@ -72,13 +76,58 @@ export default {
         },
         {
           name: 'Long',
+          mode: 'light',
           angle: 0,
-          intensity: 0.2,
           distance: 500,
-          sharpness: 0.9,
+          intensity: 0.2,
+          sharpness: 0.5,
           color: { r: 0, g: 0, b: 0, a: 1 },
           bgColor: { r: 213, g: 231, b: 250, a: 1 },
           boxColor: { r: 255, g: 255, b: 255, a: 1 },
+        },
+        {
+          name: 'Standard (tint)',
+          mode: 'light',
+          angle: 0,
+          distance: 100,
+          intensity: 0.1,
+          sharpness: 0.5,
+          color: { r: 7, g: 31, b: 87, a: 1 },
+          bgColor: { r: 213, g: 231, b: 250, a: 1 },
+          boxColor: { r: 255, g: 255, b: 255, a: 1 },
+        },
+        {
+          name: 'Long (tint)',
+          mode: 'light',
+          angle: 0,
+          distance: 500,
+          intensity: 0.2,
+          sharpness: 0.5,
+          color: { r: 10, g: 49, b: 114, a: 1 },
+          bgColor: { r: 213, g: 231, b: 250, a: 1 },
+          boxColor: { r: 255, g: 255, b: 255, a: 1 },
+        },
+        {
+          name: 'Neon (pink)',
+          mode: 'dark',
+          angle: 0,
+          distance: 60,
+          intensity: 0.5,
+          sharpness: 0.1,
+          color: { r: 226, g: 0, b: 255, a: 1 },
+          bgColor: { r: 21, g: 8, b: 31, a: 1 },
+          boxColor: { r: 22, g: 8, b: 35, a: 1 },
+        },
+        {
+          name: 'Neon (blue)',
+          mode: 'dark',
+          angle: 0,
+          distance: 80,
+          intensity: 1,
+          sharpness: 0.1,
+          color: { r: 0, g: 60, b: 255, a: 1 },
+          bgColor: { r: 8, g: 13, b: 35, a: 1 },
+          boxColor: { r: 8, g: 13, b: 35, a: 1 },
         },
       ]
     }
@@ -122,6 +171,7 @@ export default {
 <style lang="scss">
 .presets-modal {
   width: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   background-color: var(--background1);
@@ -165,25 +215,26 @@ export default {
   }
 
   .presets-list {
+    height: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1px;
-    flex-shrink: 0;
-    background-color: #fff;
+    overflow: auto;
 
     li {
       position: relative;
       z-index: 1;
       width: 100%;
       padding-bottom: 100%;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
 
       &:hover{
-        box-shadow: 0 0 0 1px var(--blueBorder);
         z-index: 2;
+        .preset-item {
+          box-shadow: 0 0 0 1px var(--blueBorder), inset 0 0 0 1px var(--blueBorder);
+        }
       }
 
     }
@@ -198,9 +249,10 @@ export default {
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 24px 8px;
+      padding: 24px 8px 8px;
       overflow: hidden;
       cursor: pointer;
+      box-shadow: 0 0 0 1px var(--border2);
 
       .box-preview {
         width: 124px;
@@ -217,8 +269,15 @@ export default {
         text-align: center;
         font-family: var(--font-stack);
         font-weight: 700;
-        font-size: var(--font-size-large);
-        color: rgba(0,0,0,0.8);
+        font-size: var(--font-size-small);
+        letter-spacing: -0.04em;
+        color: rgba(0,0,0,0.5);
+      }
+
+      &.dark {
+        .preset-label {
+          color: rgba(255,255,255,0.7);
+        }
       }
     }
   }

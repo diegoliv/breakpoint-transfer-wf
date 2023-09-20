@@ -29,6 +29,7 @@
           @focus="isFocused = true"
           @blur="isFocused = false"
         />
+        <span class="suffix" v-if="suffix">{{ suffix }}</span>
       </div>
     </div>
   </div>
@@ -41,15 +42,12 @@ export default {
   components: {
     Slider
   },
-  props: ['modelValue', 'label', 'id', 'min', 'max'],
+  props: ['modelValue', 'label', 'id', 'min', 'max', 'suffix'],
   emits: ['update:modelValue'],
   data() {
     return {
       isFocused: false
     }
-  },
-  mounted() {
-    this.sliderValue = Number(this.modelValue)
   },
   computed: {
     modelMin() {
@@ -121,6 +119,9 @@ export default {
   }
 
   .control-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     max-width: 64px;
     background-color: var(--background4);
@@ -129,6 +130,14 @@ export default {
 
     &.active {
       box-shadow: 0 0 0 1px var(--blueBorder);      
+    }
+
+    .suffix{
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--textInactive);
+      padding-right: 4px;
     }
   }
 </style>

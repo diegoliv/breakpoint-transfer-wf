@@ -98,7 +98,7 @@ export default {
 <style lang="scss">
 .preview {
   width: 100%;
-  height: 240px;
+  height: 262px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,10 +132,10 @@ export default {
 
   .preview-footer {
     position: absolute;
-    top: 192px;
+    top: 214px;
     left: 0;
     width: 100%;
-    padding: 0 16px 24px;
+    padding: 0 16px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -148,7 +148,7 @@ export default {
       width: 32px;
       height: 32px;
       border: 1px solid rgba(0,0,0,0.2);
-      box-shadow: 0px 8px 8px -4px rgba(0, 0, 0, 0.25), 0px 4px 4px -2px rgba(0, 0, 0, 0.25);
+      box-shadow: 0px 8px 8px -4px rgba(0, 0, 0, 0.25), 0px 4px 4px -2px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255,255,255,1);
       border-radius: 32px;
       cursor: pointer;
     }
