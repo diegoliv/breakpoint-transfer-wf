@@ -84,17 +84,20 @@ export default {
   methods: {
     async selectedElementCallback(element) {
       if (element) {
-        this.isElSelected = true;
-        this.selectedEl = element;
         const styles = await element.getStyles();
 
         if (!styles || styles.length === 0) {
-          return;
+          this.isElSelected = false;
+          this.selectedEl = null;
+          this.selectedStyle = null;
+          return
         }
 
         // get last style from the list
         const style = styles[styles.length - 1];
         this.selectedStyle = style;
+        this.isElSelected = true;
+        this.selectedEl = element;
       } else {
         this.isElSelected = false;
         this.selectedEl = null;
