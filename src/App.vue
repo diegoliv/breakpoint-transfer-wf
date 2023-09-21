@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     async selectedElementCallback(element) {
-      if (element) {
+      if (element && element.styles) {
         const styles = await element.getStyles();
 
         if (!styles || styles.length === 0) {
