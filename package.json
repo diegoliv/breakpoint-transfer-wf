@@ -1,5 +1,5 @@
 {
-  "name": "better-shadows",
+  "name": "breakpoint-transfer",
   "version": "0.0.1",
   "private": true,
   "main": "index.js",
@@ -20,10 +20,6 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "@ckpack/vue-color": "^1.5.0",
-    "@vueform/slider": "^2.1.7",
-    "click-outside-vue3": "^4.0.1",
-    "smooth-shadow": "^1.0.0",
     "vue": "^3.3.4"
   }
 }

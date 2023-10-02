@@ -5,7 +5,7 @@
       <h2 class="title">Select an Element</h2>
       <p class="subtitle">Before editing, select an element on the canvas.</p>
     </div>
-    <p><strong>Make sure that the element has at least one class.</strong> The shadow styles will be applied to the last class of the element.</p>
+    <p>Make sure that the element has one class. <strong>Combo class styles are not supported at the moment.</strong></p>
   </div>
 </template>
 
