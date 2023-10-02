@@ -1,6 +1,10 @@
 <template>
   <div class="app-wrapper">
     <div class="app-ui" v-show="isElSelected">
+      <div class="selected-class-wrapper">
+        <div class="selected-class-label">Selected Class</div>
+        <div class="selected-class">{{ selectedStyleName }}</div>
+      </div>
       <ControlBreakpoint v-model="selectedBreakpoint" />
       <div class="controls">
         <ControlSwitch 
@@ -16,8 +20,14 @@
           v-model="cleanupStyles" 
         />
       </div>
+      <div class="app-actions">
+        <button 
+          class="action-button"
+          :class="{success: updated}"
+        >{{ buttonLabel }}</button>
+      </div>
     </div>
-    <NotSelected />
+    <NotSelected v-show="!isElSelected" />
   </div>
 </template>
 
@@ -39,13 +49,29 @@ export default {
       hasMultipleClasses: false,
       selectedEl: null,
       selectedStyle: null,
+      selectedStyleName: null,
       selectedBreakpoint: 'default',
       overwriteStyles: false,
-      cleanupStyles: false
+      cleanupStyles: false,
+      success: false,
+      isUpdating: false
     }
   },
   mounted() {
     webflow.subscribe('selectedelement', this.selectedElementCallback);
+  },
+  computed: {
+    buttonLabel() {
+      if (this.success) {
+        return 'Styles transfered!';
+      }
+
+      if (this.isUpdating) {
+        return 'Transfering...';
+      }
+
+      return 'Transfer Styles'
+    }
   },
   methods: {
     async selectedElementCallback(element) {
@@ -55,6 +81,7 @@ export default {
         if (!styles || styles.length === 0) {
           this.isElSelected = false;
           this.selectedStyle = null;
+          this.selectedStyleName = null;
           this.selectedEl = null;
           this.hasMultipleClasses = false;
           return;
@@ -63,6 +90,7 @@ export default {
         if (styles.length > 1) {
           this.isElSelected = false;
           this.selectedStyle = null;
+          this.selectedStyleName = null;
           this.selectedEl = null;
           this.hasMultipleClasses = true;
           return;
@@ -70,6 +98,9 @@ export default {
 
         // get first style from the list
         const style = styles[0];
+
+        console.log(style);
+        this.selectedStyleName = style.getName();
         this.selectedStyle = style;
         this.isElSelected = true;
         this.hasMultipleClasses = false;
@@ -90,11 +121,10 @@ export default {
 
 <style lang="scss">
   .app-ui {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 460px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: var(--background1);
   }
   .app-wrapper {
@@ -103,60 +133,69 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 460px;
+    height: 360px;
     overflow: hidden;
     .controls {
       width: 100%;
-      flex-grow: 1;
       display: grid;
       grid-template-columns: 1fr;
       gap: 8px;
-      padding: 16px;
+      padding: 8px;
     }
 
-    .presets-modal-wrapper {
+    .selected-class-wrapper {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 24px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 30;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: 1px solid var(--border3);
+      font-weight: var(--font-weight-medium);
+      color: var(--text1);
 
-      .presets-modal-backdrop {
-        position: absolute;
-        top: 0;
-        left: 0;
+      .selected-class-label {
+        white-space: nowrap;
+        margin-right: 16px;
+      }
+
+      .selected-class {
+        height: 24px;
+        padding: 4px 6px;
+        border-radius: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;        
+        border: 1px solid rgba(43, 43, 43, 0.50);
+        background: var(--actionPrimaryBackground);
+        color: var(--actionPrimaryText);
+        box-shadow: 0px 8px 8px -4px rgba(0, 0, 0, 0.25), 0px 4px 4px -2px rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    .app-actions {
+      margin-top: auto;
+      padding: 8px;
+      width: 100%;
+
+      .action-button {
+        display: flex;
         width: 100%;
-        height: 100%;
-        z-index: 0;
-        background-color: var(--background5);
-        opacity: .5;
-        transition: opacity ease-in-out .5s;
-        transition-delay: 1s;
-      }
+        padding: 12px 6px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;        
+        color: var(--actionPrimaryText);
+        font-size: var(--font-size-big);
+        background-color: var(--actionPrimaryBackground);
+        cursor: pointer;
 
-      .presets-modal {
-        z-index: 2;
-        transition: all ease .3s;
-      }
-
-      &.v-enter-active,
-      &.v-leave-active {
-        transition: opacity 0.3s ease;
-      }
-
-      &.v-enter-from,
-      &.v-leave-to {
-        opacity: 0;
-        .presets-modal {
-          transform: translate3d(0, 50%,0) scale(0.9);
-          opacity: 0;
+        &:hover {
+          background-color: var(--actionPrimaryBackgroundHover);
         }
-      }      
+
+        &.success {
+          background-color: var(--greenBackground);
+        }
+      }
     }
   }
 </style>

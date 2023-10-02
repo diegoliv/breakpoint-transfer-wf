@@ -5,8 +5,7 @@
       type="checkbox" 
       :name="id" 
       :id="id"
-      :value="modelValue"
-      @change="$emit('update:modelValue', $event.target.value)"
+      :v-model="model"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -16,7 +15,9 @@
         class="control-switch"
         :class="isFocused ? 'active' : ''"        
       >
-        <div class="control-switch-inner"></div>
+        <div class="control-switch-inner">
+          <div class="control-switch-handle"></div>
+        </div>
       </div>
     </label>
     <div class="control-helper">
@@ -35,10 +36,19 @@ export default {
       isFocused: false
     }
   },
+  computed: {
+    model:{
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      }
+    }    
+  }
 }
 </script>
 
-<style src="@vueform/slider/themes/default.css"></style>
 <style lang="scss">
 .control-group.switch {
   label {
@@ -49,6 +59,7 @@ export default {
     color: var(--text1);
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-big);
+    cursor: pointer;
   }
 
   .control-switch-checkbox {
@@ -56,31 +67,44 @@ export default {
 
     + label .control-switch {
       position: relative;
-      display: flex;
-      justify-content: flex-start;
       width: 40px;
       height: 24px;
+      overflow: hidden;
       background-color: var(--background4);
       border-radius: 24px;
-      box-shadow: insed 0 0 0 1px solid var(--border3);
-      cursor: pointer;
+      border: 1px solid var(--border3);
 
       .control-switch-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 22px;
+        border-radius: 24px;
+        background-color: var(--blueIcon);
+        transform: translate3d(-18px, 0, 0);
+        transition: transform .15s ease-in-out;
+      }
+
+      .control-switch-handle {
+        position: absolute;
+        top: -1px;
+        right: -1px;
         width: 24px;
         height: 24px;
         border-radius: 24px;
         background-color: var(--text2);
-        border: 1px solid var(--border-3);
+        border: 1px solid var(--border3);
+      }
+    }
+
+    &:checked {
+      + label .control-switch-inner {
+        transform: translate3d(0, 0, 0);
       }
     }
   }
 
-  &:checked {
-    + label .control-switch {
-      justify-content: flex-end;
-      background-color: var(--blueIcon);
-    }
-  }
 
   .control-helper {
     margin-top: 4px;
