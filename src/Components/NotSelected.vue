@@ -21,12 +21,19 @@
     text-align: center;
     color: var(--text1);
 
+    img {
+      width: 112px;
+      height: auto;
+    }
+
     .not-selected-header{
       margin: 16px 0 32px;
     }
 
     .title {
       font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 8px;
     }
 
     .subtitle {

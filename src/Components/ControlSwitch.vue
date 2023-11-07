@@ -5,9 +5,9 @@
       type="checkbox" 
       :name="id" 
       :id="id"
-      :v-model="model"
       @focus="isFocused = true"
       @blur="isFocused = false"
+      v-model="inputValue"
     />
     <label :for="id">
       <span class="control-label">{{ label }}</span>
@@ -33,11 +33,11 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
-      isFocused: false
+      isFocused: false,
     }
   },
   computed: {
-    model:{
+    inputValue:{
       get() {
         return this.modelValue;
       },
@@ -45,8 +45,7 @@ export default {
         this.$emit("update:modelValue", value);
       }
     }    
-  }
-}
+  }}
 </script>
 
 <style lang="scss">
@@ -70,7 +69,7 @@ export default {
       width: 40px;
       height: 24px;
       overflow: hidden;
-      background-color: var(--background4);
+      background-color: var(--background2);
       border-radius: 24px;
       border: 1px solid var(--border3);
 
@@ -78,23 +77,23 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        width: 40px;
+        width: 38px;
         height: 22px;
         border-radius: 24px;
-        background-color: var(--blueIcon);
-        transform: translate3d(-18px, 0, 0);
+        background-color: var(--actionPrimaryBackground);
+        transform: translate3d(-16px, 0, 0);
         transition: transform .15s ease-in-out;
       }
 
       .control-switch-handle {
         position: absolute;
-        top: -1px;
-        right: -1px;
-        width: 24px;
-        height: 24px;
+        top: 0;
+        right: 0;
+        width: 22px;
+        height: 22px;
         border-radius: 24px;
-        background-color: var(--text2);
-        border: 1px solid var(--border3);
+        background-color: var(--backgroundInverse);
+        border: 1px solid var(--actionSecondaryBorder);
       }
     }
 

@@ -42,37 +42,37 @@ export default {
       breakpoints: [
         {
           name: '1920px and up',
-          value: '1920px',
+          value: 'xxl',
           icon: img1920px
         },
         {
           name: '1440px and up',
-          value: '1440px',
+          value: 'xl',
           icon: img1440px
         },
         {
           name: '1280px and up',
-          value: '1280px',
+          value: 'large',
           icon: img1280px
         },
         {
           name: 'Default',
-          value: 'default',
+          value: 'main',
           icon: imgDefault
         },
         {
           name: 'Tablet',
-          value: 'tablet',
+          value: 'medium',
           icon: imgTablet
         },
         {
           name: 'Mobile (landscape)',
-          value: 'mobile-landscape',
+          value: 'small',
           icon: imgMLandscape
         },
         {
           name: 'Mobile (portrait)',
-          value: 'mobile-portrait',
+          value: 'tiny',
           icon: imgMPortrait
         }
       ]
@@ -91,7 +91,7 @@ export default {
   flex-direction: column;
   font-weight: var(--font-weight-medium);
   color: var(--text1);
-  border-bottom: 1px solid var(--border3);
+  border-bottom: 1px solid var(--border1);
 }
 .control-breakpoints-label {
   width: 100%;
@@ -106,7 +106,7 @@ export default {
   gap: 1px;
   padding: 1px;
   margin-top: 4px;
-  background-color: var(--border3);
+  background-color: var(--background2);
 
   .breakpoint-button {
     width: 32px;
@@ -122,11 +122,11 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--actionSecondaryBackground);
+      background-color: var(--background2);
       cursor: pointer;
       
       &:hover {
-        background-color: var(--actionSecondaryBackgroundHover);
+        background-color: var(--background3);
 
         .breakpoint-icon {
           opacity: 1;
